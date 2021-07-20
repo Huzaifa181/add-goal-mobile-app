@@ -17,38 +17,32 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [text, setText] = useState('');
+
   const [courseGoals, setCourseGoals] = useState([]);
-  const addGoalHandler = () => {
-    setCourseGoals([...courseGoals, {key: Math.random().toString(), text}]);
-    setText('');
+  const addGoalHandler = text => {
+    setCourseGoals([...courseGoals, {id: Math.random().toString(), text}]);
+  };
+  const onDelete = id => {
+    setCourseGoals(courseGoals.filter(item => item.id !== id));
   };
   return (
     <View padding={30}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <TextInput
-          placeholder="Course Goal"
-          onChangeText={setText}
-          value={text}
-          style={{
-            flex: 1,
-            borderBottomColor: 'black',
-            borderBottomWidth: 1,
-          }}></TextInput>
-        <Button title="Add" onPress={addGoalHandler}></Button>
-      </View>
+      <GoalInput addGoalHandler={addGoalHandler} />
       <View>
         <FlatList
           data={courseGoals}
           keyExtractor={(item, index) => item.id}
           renderItem={itemData => {
             return (
-              <View style={styles.listItem}>
-                <Text>{itemData.item}</Text>
-              </View>
+              <GoalItem
+                title={itemData.item.text}
+                onDelete={() => onDelete(itemData.item.id)}
+              />
             );
           }}></FlatList>
       </View>
