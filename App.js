@@ -22,17 +22,26 @@ import GoalInput from './components/GoalInput';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
+  const [isAddMode, setIsAddMode] = useState(false);
   const [courseGoals, setCourseGoals] = useState([]);
   const addGoalHandler = text => {
     setCourseGoals([...courseGoals, {id: Math.random().toString(), text}]);
+    setIsAddMode(false);
+  };
+  const cancelGoalHandler = () => {
+    setIsAddMode(false);
   };
   const onDelete = id => {
     setCourseGoals(courseGoals.filter(item => item.id !== id));
   };
   return (
     <View padding={30}>
-      <GoalInput addGoalHandler={addGoalHandler} />
+      <Button title="Add New Goal" onPress={() => setIsAddMode(true)}></Button>
+      <GoalInput
+        visible={isAddMode}
+        addGoalHandler={addGoalHandler}
+        onCancel={cancelGoalHandler}
+      />
       <View>
         <FlatList
           data={courseGoals}
