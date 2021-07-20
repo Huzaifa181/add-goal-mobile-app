@@ -4,19 +4,11 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
+  TextInput,
   useColorScheme,
   View,
-} from 'react-native';
-import {
-  NativeBaseProvider,
-  Container,
-  Text,
-  Box,
   Button,
-  SimpleGrid,
-  VStack,
-  HStack,
-} from 'native-base';
+} from 'react-native';
 import {
   Colors,
   DebugInstructions,
@@ -28,9 +20,17 @@ const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <NativeBaseProvider>
-      <Text>Hello</Text>
-    </NativeBaseProvider>
+    <View padding={30}>
+      <View>
+        <TextInput
+          placeholder="Course Goal"
+          style={{
+            borderBottomColor: 'black',
+            borderBottomWidth: 1,
+          }}></TextInput>
+        <Button title="Add"></Button>
+      </View>
+    </View>
   );
 };
 
